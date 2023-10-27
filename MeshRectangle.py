@@ -13,12 +13,14 @@ class MeshRectangle:
     :param x2: Coordenada X del segundo punto de la malla.
     :param y1: Coordenada Y del primer punto de la malla.
     :param y2: Coordenada Y del segundo punto de la malla.
-    :param dx: Resolucion en X de la malla.
+    :param dx: Resolucion en X de la malla._
     :param dy: Resolucion en Y de la malla.
     :param file_mesh_ini_save: Ruta de la carpeta donde se guardara el archivo MeshMain.ini.
     :param file_mesh_ini: Archivo Mesh.ini."""
 
-    def __init__(self, key, x1=None, x2=None, y1=None, y2=None, dx=100, dy=100, file_mesh_ini_save=None, file_mesh_ini=None):
+    def __init__(self, key, x1=None, x2=None, y1=None, y2=None, dx=100, dy=100,
+                 file_mesh_ini_save=None, file_mesh_ini=None):
+
         self.x = []
         self.y = []
         self.z = []
@@ -94,8 +96,15 @@ class MeshRectangle:
         self.x, self.y = np.meshgrid(x_ext, y_ext)
         self.y = np.flipud(self.y)
 
+        # Me quedo con los puntos de la batimetria que estan dentro de la malla para interpolar más rapido.
+        s = np.logical_and(np.logical_and(xb >= x_ext[0], xb <= x_ext[-1]),
+                           np.logical_and(yb >= y_ext[0], yb <= y_ext[-1]))
+
         # Interpolo la batimetria en la malla.
-        self.z = griddata((xb, yb), zb, (self.x, self.y))
+        xb_g = [xb[i] for i in range(len(s)) if s[i] == True]
+        yb_g = [yb[i] for i in range(len(s)) if s[i] == True]
+        zb_g = [zb[i] for i in range(len(s)) if s[i] == True]
+        self.z = griddata((xb_g, yb_g), zb_g, (self.x, self.y))
 
     def save(self, file_save_dat):
         """Guarda la profundidad de la batimetria en la malla en un archivo .dat.
