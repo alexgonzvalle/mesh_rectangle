@@ -8,17 +8,17 @@ from matplotlib import pyplot as plt
 class MeshRectangle:
     """Clase para calcular una malla rectangular.
 
+    :param key: Nombre de la malla.
+    :param x1: Coordenada X del primer punto de la malla.
+    :param x2: Coordenada X del segundo punto de la malla.
+    :param y1: Coordenada Y del primer punto de la malla.
+    :param y2: Coordenada Y del segundo punto de la malla.
     :param dx: Resolucion en X de la malla.
     :param dy: Resolucion en Y de la malla.
-    :param nx: Numero de nodos en X de la malla.
-    :param ny: Numero de nodos en Y de la malla.
-    :param xmin: Coordenada X minima de la malla.
-    :param ymin: Coordenada Y minima de la malla.
-    :param x: Coordenadas X de la malla.
-    :param y: Coordenadas Y de la malla.
-    :param z: Profundidad de la malla."""
+    :param file_mesh_ini_save: Ruta de la carpeta donde se guardara el archivo MeshMain.ini.
+    :param file_mesh_ini: Archivo Mesh.ini."""
 
-    def __init__(self, key, x1=None, x2=None, y1=None, y2=None, dx=100, dy=100, folder_mesh=None, file_mesh_ini=None):
+    def __init__(self, key, x1=None, x2=None, y1=None, y2=None, dx=100, dy=100, file_mesh_ini_save=None, file_mesh_ini=None):
         self.x = []
         self.y = []
         self.z = []
@@ -40,13 +40,14 @@ class MeshRectangle:
             self.nx = round(width / self.dx)
             self.ny = round(heigth / self.dy)
 
-            if folder_mesh is not None and folder_mesh.exists():
-                self.save_conf(folder_mesh.path, key)
+            if file_mesh_ini_save is not None and not file_mesh_ini_save.exists():
+                self.save_conf(file_mesh_ini_save, key)
 
     def read_conf(self, file_mesh_ini, key):
         """Lee el archivo Mesh.ini y carga los parametros de la malla rectangular.
 
-        :param file_mesh_ini: Archivo Mesh.ini."""
+        :param file_mesh_ini: Archivo Mesh.ini.
+        :param key: Nombre de la malla."""
 
         if os.path.exists(file_mesh_ini):
             config_obj = configparser.ConfigParser()
@@ -62,12 +63,13 @@ class MeshRectangle:
         else:
             raise ValueError('El archivo {:s} no existe.'.format(file_mesh_ini))
 
-    def save_conf(self, folder_mesh_path, key):
+    def save_conf(self, file_mesh_ini_save, key):
         """Guarda los parametros de la malla rectangular en un archivo MeshMain.ini.
 
-        :param folder_mesh_path: Ruta de la carpeta donde se guardara el archivo MeshMain.ini."""
+        :param file_mesh_ini_save: Ruta de la carpeta donde se guardara el archivo MeshMain.ini.
+        :param key: Nombre de la malla."""
 
-        with open(os.path.join(folder_mesh_path, 'MeshMain.ini'), 'w') as f:
+        with open(file_mesh_ini_save, 'w') as f:
             f.write('[{:s}}]'.format(key))
             f.write('xmin = {:f}'.format(self.xmin))
             f.write('ymin = {:f}'.format(self.ymin))
