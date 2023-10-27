@@ -95,7 +95,7 @@ class MeshRectangle:
         # Interpolo la batimetria en la malla.
         self.z = griddata((xb, yb), zb, (self.x, self.y))
 
-    def save_dat(self, file_save_dat):
+    def save(self, file_save_dat):
         """Guarda la profundidad de la batimetria en la malla en un archivo .dat.
 
         :param file_save_dat: Nombre del archivo .dat donde se guardara la batimetria."""
@@ -110,7 +110,7 @@ class MeshRectangle:
             f_out.write("\n")
         f_out.close()
 
-    def plot_batimetria_malla(self):
+    def plot(self):
         """Grafica la batimetria en la malla rectangular."""
 
         z = self.z.copy() * -1
@@ -126,7 +126,7 @@ class MeshRectangle:
         cbar.set_label("(m)", labelpad=-0.1)
         plt.show()
 
-    def plot_batimetria_malla_3d(self):
+    def plot_3d(self):
         """Grafica la batimetria en la malla rectangular en 3D."""
 
         z = self.z.copy() * -1
