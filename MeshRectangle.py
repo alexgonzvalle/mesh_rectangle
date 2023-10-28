@@ -90,21 +90,23 @@ class MeshRectangle:
         xb, yb, zb = bathymetry[:, 0], bathymetry[:, 1], bathymetry[:, 2]
 
         # Calculo las dimensiones de la malla.
-        x_ext = np.arange(self.xmin, self.xmin + self.nx * self.dx, self.dx)
-        y_ext = np.arange(self.ymin, self.ymin + self.ny * self.dy, self.dy)
+        xmax = self.xmin + self.nx * self.dx
+        ymax = self.ymin + self.ny * self.dy
+
+        x_ext = np.arange(self.xmin, xmax, self.dx)
+        y_ext = np.arange(self.ymin, ymax, self.dy)
 
         self.x, self.y = np.meshgrid(x_ext, y_ext)
         self.y = np.flipud(self.y)
 
-        # Me quedo con los puntos de la batimetria que estan dentro de la malla para interpolar más rapido.
-        s = np.logical_and(np.logical_and(xb >= x_ext[0], xb <= x_ext[-1]),
-                           np.logical_and(yb >= y_ext[0], yb <= y_ext[-1]))
+        # Reducir el número de puntos de la batimetría escogiendo puntos aleatorios.
+        indices = np.random.choice(len(xb), np.size(self.x) * 10, replace=False)
+        xb_s = xb[indices]
+        yb_s = yb[indices]
+        zb_s = zb[indices]
 
-        # Interpolo la batimetria en la malla.
-        xb_g = [xb[i] for i in range(len(s)) if s[i] == True]
-        yb_g = [yb[i] for i in range(len(s)) if s[i] == True]
-        zb_g = [zb[i] for i in range(len(s)) if s[i] == True]
-        self.z = griddata((xb_g, yb_g), zb_g, (self.x, self.y))
+        self.z = griddata((xb_s, yb_s), zb_s, (self.x, self.y), method='linear')
+
 
     def save(self, file_save_dat):
         """Guarda la profundidad de la batimetria en la malla en un archivo .dat.
@@ -114,7 +116,7 @@ class MeshRectangle:
         f_out = open(file_save_dat, 'w')
         for iDepth_mesh in self.z:
             for ij_depth_mesh in iDepth_mesh:
-                if ij_depth_mesh == 0:
+                if ij_depth_mesh == 0 or np.isnan(ij_depth_mesh):
                     f_out.write('NaN\t')
                 else:
                     f_out.write('{:5.6f}'.format(ij_depth_mesh) + "\t")
