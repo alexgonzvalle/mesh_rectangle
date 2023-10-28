@@ -80,10 +80,11 @@ class MeshRectangle:
             f.write('nx = {:f}'.format(self.nx))
             f.write('ny = {:f}'.format(self.ny))
 
-    def exec(self, file_batimetria_dat):
+    def exec(self, file_batimetria_dat, factor_select=1):
         """Calcula la batimetria en la malla rectangular..
 
-        :param file_batimetria_dat: Nombre del archivo .dat donde se encuentra la batimetria.."""
+        :param file_batimetria_dat: Nombre del archivo .dat donde se encuentra la batimetria.
+        :param factor_select: Factor de reduccion de puntos de la batimetria."""
 
         # Leo la batimetria.
         bathymetry = np.loadtxt(file_batimetria_dat)
@@ -100,7 +101,7 @@ class MeshRectangle:
         self.y = np.flipud(self.y)
 
         # Reducir el número de puntos de la batimetría escogiendo puntos aleatorios.
-        indices = np.random.choice(len(xb), np.size(self.x) * 10, replace=False)
+        indices = np.random.choice(len(xb), int(len(xb) * factor_select), replace=False)
         xb_s = xb[indices]
         yb_s = yb[indices]
         zb_s = zb[indices]
