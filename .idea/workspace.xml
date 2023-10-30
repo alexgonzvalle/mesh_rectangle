@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ce1174fd-16ac-4b44-ac5f-2470ac654c19" name="Default Changelist" comment="Reducir el número de puntos de la batimetría escogiendo puntos aleatorios." />
+    <list default="true" id="ce1174fd-16ac-4b44-ac5f-2470ac654c19" name="Default Changelist" comment="Reducir el número de puntos de la batimetría escogiendo puntos aleatorios.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,12 +22,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "alexgonzvalle"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;alexgonzvalle&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -46,13 +48,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Python.example">
     <configuration name="MeshRectangle" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="mesh_rectangle" />
@@ -182,7 +185,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Me quedo con los puntos de la batimetria que estan dentro de la malla para interpolar más rapido." />
     <MESSAGE value="Reducir el número de puntos de la batimetría escogiendo puntos aleatorios." />
-    <option name="LAST_COMMIT_MESSAGE" value="Reducir el número de puntos de la batimetría escogiendo puntos aleatorios." />
+    <MESSAGE value="Comentarios en las funciones" />
+    <option name="LAST_COMMIT_MESSAGE" value="Comentarios en las funciones" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
