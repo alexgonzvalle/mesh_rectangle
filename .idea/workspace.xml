@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ce1174fd-16ac-4b44-ac5f-2470ac654c19" name="Default Changelist" comment="Add file">
-      <change beforePath="$PROJECT_DIR$/.idea/mesh_rectangle.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mesh_rectangle.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="ce1174fd-16ac-4b44-ac5f-2470ac654c19" name="Default Changelist" comment="Change Files Project">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Example/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/Example/example.py" afterDir="false" />
     </list>
@@ -53,8 +51,11 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "main",
+    "last_opened_file_path": "D:/Development/repos/manager_swan",
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
@@ -176,7 +177,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698656089149</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Change Files Project">
+      <option name="closed" value="true" />
+      <created>1698737901607</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1698737901607</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -198,14 +207,7 @@
     <MESSAGE value="Reducir el número de puntos de la batimetría escogiendo puntos aleatorios." />
     <MESSAGE value="Comentarios en las funciones" />
     <MESSAGE value="Add file" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add file" />
-  </component>
-  <component name="XDebuggerManager">
-    <watches-manager>
-      <configuration name="PythonConfigurationType">
-        <watch expression="np.ceil(len(xb) * 3/4)" language="Python" />
-        <watch expression="np.floor(len(xb) * 3/4)" language="Python" />
-      </configuration>
-    </watches-manager>
+    <MESSAGE value="Change Files Project" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change Files Project" />
   </component>
 </project>
