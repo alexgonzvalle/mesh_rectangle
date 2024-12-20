@@ -108,7 +108,6 @@ class MeshRectangle:
 
         self.z = griddata((xb_s, yb_s), zb_s, (self.x, self.y), method='linear')
 
-
     def save(self, file_save_dat):
         """Guarda la profundidad de la batimetria en la malla en un archivo .dat.
 
@@ -128,7 +127,7 @@ class MeshRectangle:
         """Grafica la batimetria en la malla rectangular."""
 
         z = self.z.copy() * -1
-        z[z == 0] = np.NaN
+        z[z >= 0] = np.NaN
 
         fig, ax = plt.subplots()
         ax.set_title('Batimetria en la malla rectangular')
