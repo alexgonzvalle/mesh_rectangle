@@ -1,0 +1,249 @@
+import os
+import numpy as np
+import configparser
+from scipy.interpolate import griddata
+import scipy.spatial.qhull as qhull
+from matplotlib import pyplot as plt
+import logging
+
+
+class MeshStructured:
+    """Clase para calcular una malla rectangular.
+    :param key: Nombre de la malla.
+    :param dx: Resolucion en X de la malla._
+    :param dy: Resolucion en Y de la malla."""
+
+    def __init__(self, key, dx=100, dy=100, coord_type='UTM'):
+        self.key = key
+        self.coord_type = coord_type
+
+        self.x = []
+        self.y = []
+        self.z = []
+
+        self.dx = dx
+        self.dy = dy
+        self.lx = None
+        self.ly = None
+
+        self.fname_out = ''
+
+    def load(self, x1=None, x2=None, y1=None, y2=None, file_mesh_ini_save=None, file_mesh_ini=None):
+        """ Cargar malla
+            :param x1: Coordenada X del primer punto de la malla.
+            :param x2: Coordenada X del segundo punto de la malla.
+            :param y1: Coordenada Y del primer punto de la malla.
+            :param y2: Coordenada Y del segundo punto de la malla.
+            :param file_mesh_ini_save: Ruta de la carpeta donde se guardara el archivo MeshMain.ini.
+            :param file_mesh_ini: Archivo Mesh.ini."""
+
+        if file_mesh_ini is not None:
+            self.read_conf(file_mesh_ini)
+        else:
+            if x1 is not None and x2 is not None and y1 is not None and y2 is not None:
+                logging.info(f'Cargar malla rectangular por coordenadas x1: {x1}, x2: {x2}, y1: {y1}, y2: {y2}')
+
+                self.xmin = min(x1, x2)
+                self.ymin = min(y1, y2)
+                xmax = max(x1, x2)
+                ymax = max(y1, y2)
+
+                width = xmax - self.xmin
+                heigth = ymax - self.ymin
+
+                self.nx = round(width / self.dx)
+                self.ny = round(heigth / self.dy)
+
+                self.lx = self.nx * self.dx
+                self.ly = self.ny * self.dy
+
+                if file_mesh_ini_save is not None and not file_mesh_ini_save.exists():
+                    self.save_conf(file_mesh_ini_save)
+
+        logging.info(f'Malla rectangular {self.key} correcta.')
+
+    def read_conf(self, file_mesh_ini):
+        """Lee el archivo Mesh.ini y carga los parametros de la malla rectangular.
+
+        :param file_mesh_ini: Archivo Mesh.ini."""
+
+        if os.path.exists(file_mesh_ini):
+            logging.info(f'Cargar fichero de configuración {file_mesh_ini} para la malla rectangular {self.key}')
+
+            config_obj = configparser.ConfigParser()
+            config_obj.read(file_mesh_ini)
+
+            data = config_obj[self.key]
+            self.x = float(data['xmin']) if self.coord_type == 'UTM' else float(data['lonmin'])
+            self.y = float(data['ymin']) if self.coord_type == 'UTM' else float(data['latmin'])
+            self.dx = int(data['dx']) if 'dx' in data else self.dx
+            self.dy = int(data['dy']) if 'dy' in data else self.dy
+            self.nx = int(data['nx']) if 'nx' in data else self.nx
+            self.ny = int(data['ny']) if 'ny' in data else self.ny
+            self.lx = self.nx * self.dx
+            self.ly = self.ny * self.dy
+        else:
+            logging.error(f'El archivo {file_mesh_ini} no existe.')
+            raise ValueError(f'El archivo {file_mesh_ini} no existe.')
+
+    def save_conf(self, file_mesh_ini_save):
+        """Guarda los parametros de la malla rectangular en un archivo MeshMain.ini.
+
+        :param file_mesh_ini_save: Ruta de la carpeta donde se guardara el archivo MeshMain.ini."""
+
+        if self.coord_type == 'LONLAT':
+            var_x = 'lonmin'
+            var_y = 'latmin'
+            var_dx = 'dlon'
+            var_dy = 'dlat'
+            var_nx = 'nlon'
+            var_ny = 'nlat'
+        else:
+            var_x = 'xmin'
+            var_y = 'ymin'
+            var_dx = 'dx'
+            var_dy = 'dy'
+            var_nx = 'nx'
+            var_ny = 'ny'
+
+        with open(file_mesh_ini_save, 'w') as f:
+            f.write(f'[{self.key}]')
+            f.write(f'{var_x} = {self.x}')
+            f.write(f'{var_y} = {self.y}')
+            f.write(f'{var_dx} = {self.dx}')
+            f.write(f'{var_dy} = {self.dy}')
+            f.write(f'{var_nx} = {self.nx}')
+            f.write(f'{var_ny} = {self.ny}')
+
+        logging.info(f'Guardado fichero de configuración {file_mesh_ini_save} para la malla rectangular {self.key}.')
+
+    def exec(self, file_batimetria_dat, factor_select=1):
+        """Calcula la batimetria en la malla rectangular..
+
+        :param file_batimetria_dat: Nombre del archivo .dat donde se encuentra la batimetria.
+        :param factor_select: Factor de reduccion de puntos de la batimetria."""
+
+        # Leo la batimetria.
+        bathymetry = np.loadtxt(file_batimetria_dat)
+        xb, yb, zb = bathymetry[:, 0], bathymetry[:, 1], bathymetry[:, 2]
+        logging.info(f'Leida batimetria del fichero {file_batimetria_dat}.')
+
+        # Calculo las dimensiones de la malla.
+        xmax = self.xmin + self.nx * self.dx
+        ymax = self.ymin + self.ny * self.dy
+
+        x_ext = np.arange(self.xmin, xmax, self.dx)
+        y_ext = np.arange(self.ymin, ymax, self.dy)
+
+        self.x, self.y = np.meshgrid(x_ext, y_ext)
+        self.y = np.flipud(self.y)
+
+        logging.info(f'Calculo de la batimetria en la malla rectangular {self.key} correcto.')
+
+        # Reducir el número de puntos de la batimetría escogiendo puntos aleatorios.
+        indices = np.random.choice(len(xb), int(len(xb) * factor_select), replace=False)
+        xb_s = xb[indices]
+        yb_s = yb[indices]
+        zb_s = zb[indices]
+        logging.info(f'Reduccion de puntos de la batimetria correcto. Factor de reduccion: {factor_select}.')
+
+        self.z = griddata((xb_s, yb_s), zb_s, (self.x, self.y), method='linear')
+        logging.info(f'Interpolacion de la batimetria correcta.')
+
+    def enabled(self):
+        """Comprueba si la malla rectangular tiene batimetria."""
+
+        return self.x is not None
+
+    def save(self, file_save_dat):
+        """Guarda la profundidad de la batimetria en la malla en un archivo .dat.
+
+        :param file_save_dat: Nombre del archivo .dat donde se guardara la batimetria."""
+
+        f_out = open(file_save_dat, 'w')
+        for iDepth_mesh in self.z:
+            for ij_depth_mesh in iDepth_mesh:
+                if ij_depth_mesh == 0 or np.isnan(ij_depth_mesh):
+                    f_out.write('NaN\t')
+                else:
+                    f_out.write('{:5.6f}'.format(ij_depth_mesh) + "\t")
+            f_out.write("\n")
+        f_out.close()
+
+        logging.info(f'Guardado de la batimetria en el fichero {file_save_dat} correcto.')
+
+    def plot(self, fname_out=None, _show=True):
+        """Grafica la batimetria en la malla rectangular.
+        :param fname_out: [str] Nombre del archivo de salida.
+        :param _show: [bool] Mostrar la figura."""
+
+        z = self.z.copy() * -1
+        z[z >= 0] = np.NaN
+
+        fig, ax = plt.subplots()
+        ax.set_title('Batimetria en la malla rectangular')
+        if self.coord_type == 'UTM':
+            ax.set_xlabel('X (m)')
+            ax.set_ylabel('Y (m)')
+        else:
+            ax.set_xlabel('Lon (º)')
+            ax.set_ylabel('Lat (º)')
+        ax.set_aspect('equal')
+        pc = ax.pcolor(self.x, self.y, z, cmap='Blues_r', shading='auto', edgecolors="k", linewidth=0.5)
+        cbar = fig.colorbar(pc)
+        cbar.set_label("(m)", labelpad=-0.1)
+
+        if fname_out is not None:
+            plt.savefig(fname_out, bbox_inches='tight')
+
+        if _show:
+            plt.show()
+
+    def plot_3d(self):
+        """Grafica la batimetria en la malla rectangular en 3D."""
+
+        z = self.z.copy() * -1
+        z[z == 0] = np.NaN
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+        ax.view_init(50, 135)
+        ax.plot_surface(self.x, self.y, z, cmap='Blues_r')
+        if self.coord_type == 'UTM':
+            ax.set_xlabel('X [m]')
+            ax.set_ylabel('Y [m]')
+        else:
+            ax.set_xlabel('Lon [º]')
+            ax.set_ylabel('Lat [º]')
+        ax.set_zlabel('Z [m]')
+        plt.show()
+
+    def set_var(self, x, y, var):
+        """Interpolar variable en la malla rectangular.
+        :param x: [np.array] Coordenadas X de la variable.
+        :param y: [np.array] Coordenadas Y de la variable.
+        :param var: [np.array] Variable a interpolar.
+        :return: [np.array] Coordenadas X de la malla, [np.array] Coordenadas Y de la malla, [np.array] Variable interpolar en la malla."""
+
+        def interp_weights(xy, uv, d=2):
+            tri = qhull.Delaunay(xy)
+            simplex = tri.find_simplex(uv)
+            vertices = np.take(tri.simplices, simplex, axis=0)
+            temp = np.take(tri.transform, simplex, axis=0)
+            delta = uv - temp[:, d]
+            bary = np.einsum('njk,nk->nj', temp[:, :d, :], delta)
+            return vertices, np.hstack((bary, 1 - bary.sum(axis=1, keepdims=True)))
+
+        def interpolate(values, vtx, wts):
+            return np.einsum('nj,nj->n', np.take(values, vtx), wts)
+
+        x_ = np.arange(self.xmin, self.xmin + self.nx * self.dx, self.dx)
+        y_ = np.arange(self.ymin, self.ymin + self.ny * self.dy, self.dy)
+        x_mesh, y_mesh = np.meshgrid(x_, y_)
+
+        vtx, wts = interp_weights(np.vstack((x, y)).T, np.vstack((x_mesh.ravel(), y_mesh.ravel())).T)
+        var_mesh = interpolate(var.flatten(), vtx, wts).reshape(x_mesh.shape[0], x_mesh.shape[1])
+
+        logging.info(f'Interpolacion de la variable en la malla estructurada correcta.')
+
+        return x_mesh, y_mesh, var_mesh

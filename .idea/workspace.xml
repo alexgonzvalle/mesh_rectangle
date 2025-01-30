@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ce1174fd-16ac-4b44-ac5f-2470ac654c19" name="Default Changelist" comment="Change Example">
+      <change afterPath="$PROJECT_DIR$/MeshStructured/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MeshStructured/__main__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MeshRectangle.py" beforeDir="false" afterPath="$PROJECT_DIR$/MeshRectangle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Example/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/Example/example.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MeshRectangle.py" beforeDir="false" afterPath="$PROJECT_DIR$/MeshStructured/MeshStructured.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,12 +33,12 @@
     &quot;assignee&quot;: &quot;alexgonzvalle&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/alexgonzvalle/mesh_rectangle.git",
-    "accountId": "68f20f2c-3325-47e8-970e-b032969ba91c"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/alexgonzvalle/mesh_rectangle.git&quot;,
+    &quot;accountId&quot;: &quot;68f20f2c-3325-47e8-970e-b032969ba91c&quot;
   }
-}]]></component>
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -47,21 +51,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "D:/Development/repos/mesh_rectangle",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Development/repos/mesh_rectangle&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Development\repos\mesh_rectangle\mesh_structured" />
+    </key>
+  </component>
   <component name="RunManager" selected="Python.example">
-    <configuration name="MeshRectangle" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="MeshStructured" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="mesh_rectangle" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -75,7 +88,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/MeshRectangle.py" />
+      <option name="SCRIPT_NAME" value="D:\Development\repos\mesh_rectangle\mesh_structured\MeshStructured.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -134,15 +147,15 @@
       <list>
         <item itemvalue="Python.example" />
         <item itemvalue="Python.test_point_in_rectangle" />
-        <item itemvalue="Python.MeshRectangle" />
+        <item itemvalue="Python.MeshStructured" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-PY-243.22562.220" />
-        <option value="bundled-python-sdk-0fc6c617c4bd-9a18a617cbe4-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.22562.220" />
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-PY-243.23654.177" />
+        <option value="bundled-python-sdk-91d3a02ef49d-43b77aa2d136-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.23654.177" />
       </set>
     </attachedChunks>
   </component>
@@ -157,6 +170,8 @@
       <workItem from="1698434565240" duration="14000" />
       <workItem from="1698434599855" duration="8000" />
       <workItem from="1734692837663" duration="28000" />
+      <workItem from="1738225941813" duration="1466000" />
+      <workItem from="1738227495232" duration="3389000" />
     </task>
     <task id="LOCAL-00001" summary="Me quedo con los puntos de la batimetria que estan dentro de la malla para interpolar más rapido.">
       <option name="closed" value="true" />

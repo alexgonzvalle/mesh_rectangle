@@ -1,4 +1,4 @@
-from MeshRectangle import MeshRectangle
+from MeshStructured.MeshStructured import MeshRectangle
 
 file_bati_path = r'D:\Development\repos\Garachico\Operacional_Garachico\RESOURCES\SWAN\Batimetria_NUEVA_V2.dat'
 file_conf_path = 'Garachico/mesh.ini'
