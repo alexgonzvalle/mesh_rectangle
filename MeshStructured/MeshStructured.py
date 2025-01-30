@@ -14,6 +14,9 @@ class MeshStructured:
     :param dy: Resolucion en Y de la malla."""
 
     def __init__(self, key, coord_type='UTM'):
+        logging.basicConfig(filename='mesh_structured.log', encoding='utf-8', format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %H:%M:%S', level=logging.INFO)
+        logging.info(f'Iniciando malla estructurada {key}.')
+
         self.key = key
         self.coord_type = coord_type
 
