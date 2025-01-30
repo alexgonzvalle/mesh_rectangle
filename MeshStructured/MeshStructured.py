@@ -13,7 +13,7 @@ class MeshStructured:
     :param dx: Resolucion en X de la malla._
     :param dy: Resolucion en Y de la malla."""
 
-    def __init__(self, key, dx=100, dy=100, coord_type='UTM'):
+    def __init__(self, key, coord_type='UTM'):
         self.key = key
         self.coord_type = coord_type
 
@@ -21,14 +21,14 @@ class MeshStructured:
         self.y = []
         self.z = []
 
-        self.dx = dx
-        self.dy = dy
+        self.dx = None
+        self.dy = None
         self.lx = None
         self.ly = None
 
         self.fname_out = ''
 
-    def load(self, x1=None, x2=None, y1=None, y2=None, file_mesh_ini_save=None, file_mesh_ini=None):
+    def load(self, x1=None, x2=None, y1=None, y2=None, dx=100, dy=100, file_mesh_ini_save=None, file_mesh_ini=None):
         """ Cargar malla
             :param x1: Coordenada X del primer punto de la malla.
             :param x2: Coordenada X del segundo punto de la malla.
@@ -50,6 +50,9 @@ class MeshStructured:
 
                 width = xmax - self.xmin
                 heigth = ymax - self.ymin
+
+                self.dx = dx
+                self.dy = dy
 
                 self.nx = round(width / self.dx)
                 self.ny = round(heigth / self.dy)
