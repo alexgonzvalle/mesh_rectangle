@@ -71,20 +71,24 @@ class MeshStructured:
         :param file_mesh_ini: Archivo Mesh.ini."""
 
         if os.path.exists(file_mesh_ini):
-            logging.info(f'Cargar fichero de configuración {file_mesh_ini} para la malla rectangular {self.key}')
+            try:
+                logging.info(f'Cargar fichero de configuración {file_mesh_ini} para la malla rectangular {self.key}')
 
-            config_obj = configparser.ConfigParser()
-            config_obj.read(file_mesh_ini)
+                config_obj = configparser.ConfigParser()
+                config_obj.read(file_mesh_ini)
 
-            data = config_obj[self.key]
-            self.x = float(data['xmin']) if self.coord_type == 'UTM' else float(data['lonmin'])
-            self.y = float(data['ymin']) if self.coord_type == 'UTM' else float(data['latmin'])
-            self.dx = int(data['dx']) if 'dx' in data else self.dx
-            self.dy = int(data['dy']) if 'dy' in data else self.dy
-            self.nx = int(data['nx']) if 'nx' in data else self.nx
-            self.ny = int(data['ny']) if 'ny' in data else self.ny
-            self.lx = self.nx * self.dx
-            self.ly = self.ny * self.dy
+                data = config_obj[self.key]
+                self.x = float(data['xmin']) if self.coord_type == 'UTM' else float(data['lonmin'])
+                self.y = float(data['ymin']) if self.coord_type == 'UTM' else float(data['latmin'])
+                self.dx = int(data['dx']) if 'dx' in data else self.dx
+                self.dy = int(data['dy']) if 'dy' in data else self.dy
+                self.nx = int(data['nx']) if 'nx' in data else self.nx
+                self.ny = int(data['ny']) if 'ny' in data else self.ny
+                self.lx = self.nx * self.dx
+                self.ly = self.ny * self.dy
+            except Exception as e:
+                logging.error(e.args[0])
+                raise ValueError(e.args[0])
         else:
             logging.error(f'El archivo {file_mesh_ini} no existe.')
             raise ValueError(f'El archivo {file_mesh_ini} no existe.')
@@ -120,16 +124,12 @@ class MeshStructured:
 
         logging.info(f'Guardado fichero de configuración {file_mesh_ini_save} para la malla rectangular {self.key}.')
 
-    def exec(self, file_batimetria_dat, factor_select=1):
+    def exec(self, xb, yb, zb, factor_select=1):
         """Calcula la batimetria en la malla rectangular..
-
-        :param file_batimetria_dat: Nombre del archivo .dat donde se encuentra la batimetria.
+        :param xb: Vector de coordenadas X de la batimetría
+        :param yb: Vector de coordenadas Y de la batimetría
+        :param zb: Vector de coordenadas Z de la batimetría
         :param factor_select: Factor de reduccion de puntos de la batimetria."""
-
-        # Leo la batimetria.
-        bathymetry = np.loadtxt(file_batimetria_dat)
-        xb, yb, zb = bathymetry[:, 0], bathymetry[:, 1], bathymetry[:, 2]
-        logging.info(f'Leida batimetria del fichero {file_batimetria_dat}.')
 
         # Calculo las dimensiones de la malla.
         xmax = self.xmin + self.nx * self.dx
@@ -163,7 +163,8 @@ class MeshStructured:
 
         :param file_save_dat: Nombre del archivo .dat donde se guardara la batimetria."""
 
-        f_out = open(file_save_dat, 'w')
+        self.fname_out = file_save_dat
+        f_out = open(self.fname_out, 'w')
         for iDepth_mesh in self.z:
             for ij_depth_mesh in iDepth_mesh:
                 if ij_depth_mesh == 0 or np.isnan(ij_depth_mesh):
@@ -173,11 +174,11 @@ class MeshStructured:
             f_out.write("\n")
         f_out.close()
 
-        logging.info(f'Guardado de la batimetria en el fichero {file_save_dat} correcto.')
+        logging.info(f'Guardado de la batimetria en el fichero {self.fname_out} correcto.')
 
-    def plot(self, fname_out=None, _show=True):
+    def plot(self, fname_png=None, _show=True):
         """Grafica la batimetria en la malla rectangular.
-        :param fname_out: [str] Nombre del archivo de salida.
+        :param fname_png: [str] Nombre del archivo de salida.
         :param _show: [bool] Mostrar la figura."""
 
         z = self.z.copy() * -1
@@ -196,8 +197,8 @@ class MeshStructured:
         cbar = fig.colorbar(pc)
         cbar.set_label("(m)", labelpad=-0.1)
 
-        if fname_out is not None:
-            plt.savefig(fname_out, bbox_inches='tight')
+        if fname_png is not None:
+            plt.savefig(fname_png, bbox_inches='tight')
 
         if _show:
             plt.show()
