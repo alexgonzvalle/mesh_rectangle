@@ -24,7 +24,7 @@ class MeshStructured:
             formatter = logging.Formatter('%(asctime)s - %(filename)s - %(levelname)s - %(message)s', '%Y-%m-%d %H:%M:%S')
 
             # Archivo
-            file_handler = logging.FileHandler('got.log', mode='w', encoding='utf-8')
+            file_handler = logging.FileHandler('mesh_structured.log', mode='w', encoding='utf-8')
             file_handler.setFormatter(formatter)
 
             # Consola

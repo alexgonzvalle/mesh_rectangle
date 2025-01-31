@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ce1174fd-16ac-4b44-ac5f-2470ac654c19" name="Default Changelist" comment="Convertido a libreria">
+    <list default="true" id="ce1174fd-16ac-4b44-ac5f-2470ac654c19" name="Default Changelist" comment="Add logging">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MeshStructured/MeshStructured.py" beforeDir="false" afterPath="$PROJECT_DIR$/MeshStructured/MeshStructured.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,7 +170,7 @@
       <workItem from="1738249523215" duration="77000" />
       <workItem from="1738249641164" duration="3000" />
       <workItem from="1738254585302" duration="35000" />
-      <workItem from="1738312241565" duration="168000" />
+      <workItem from="1738312241565" duration="814000" />
     </task>
     <task id="LOCAL-00001" summary="Me quedo con los puntos de la batimetria que estan dentro de la malla para interpolar más rapido.">
       <option name="closed" value="true" />
@@ -253,7 +252,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738249556463</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Add logging">
+      <option name="closed" value="true" />
+      <created>1738312456966</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1738312456966</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -278,6 +285,7 @@
     <MESSAGE value="Change Files Project" />
     <MESSAGE value="Change Example" />
     <MESSAGE value="Convertido a libreria" />
-    <option name="LAST_COMMIT_MESSAGE" value="Convertido a libreria" />
+    <MESSAGE value="Add logging" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add logging" />
   </component>
 </project>
