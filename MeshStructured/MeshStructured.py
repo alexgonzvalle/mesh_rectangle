@@ -14,8 +14,28 @@ class MeshStructured:
     :param dy: Resolucion en Y de la malla."""
 
     def __init__(self, key, coord_type='UTM'):
-        logging.basicConfig(filename='mesh_structured.log', encoding='utf-8', format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %H:%M:%S', level=logging.INFO)
-        logging.info(f'Iniciando malla estructurada {key}.')
+        self.logger = logging.getLogger('mi_logger')
+        if self.logger is None:
+            # Configuración del logger
+            logger = logging.getLogger('mi_logger')
+            logger.setLevel(logging.INFO)
+
+            # Formato
+            formatter = logging.Formatter('%(asctime)s - %(filename)s - %(levelname)s - %(message)s', '%Y-%m-%d %H:%M:%S')
+
+            # Archivo
+            file_handler = logging.FileHandler('got.log', mode='w', encoding='utf-8')
+            file_handler.setFormatter(formatter)
+
+            # Consola
+            console_handler = logging.StreamHandler()
+            console_handler.setFormatter(formatter)
+
+            # Agregar manejadores al logger
+            logger.addHandler(file_handler)
+            logger.addHandler(console_handler)
+
+        self.logger.info(f'Iniciando malla estructurada {key}.')
 
         self.key = key
         self.coord_type = coord_type
@@ -44,7 +64,7 @@ class MeshStructured:
             self.read_conf(file_mesh_ini)
         else:
             if x1 is not None and x2 is not None and y1 is not None and y2 is not None:
-                logging.info(f'Cargar malla rectangular por coordenadas x1: {x1}, x2: {x2}, y1: {y1}, y2: {y2}')
+                self.logger.info(f'Cargar malla rectangular por coordenadas x1: {x1}, x2: {x2}, y1: {y1}, y2: {y2}')
 
                 self.xmin = min(x1, x2)
                 self.ymin = min(y1, y2)
@@ -63,10 +83,10 @@ class MeshStructured:
                 self.lx = self.nx * self.dx
                 self.ly = self.ny * self.dy
 
-                if file_mesh_ini_save is not None and not file_mesh_ini_save.exists():
+                if file_mesh_ini_save is not None:
                     self.save_conf(file_mesh_ini_save)
 
-        logging.info(f'Malla rectangular {self.key} correcta.')
+        self.logger.info(f'Malla rectangular {self.key} correcta.')
 
     def read_conf(self, file_mesh_ini):
         """Lee el archivo Mesh.ini y carga los parametros de la malla rectangular.
@@ -75,7 +95,7 @@ class MeshStructured:
 
         if os.path.exists(file_mesh_ini):
             try:
-                logging.info(f'Cargar fichero de configuración {file_mesh_ini} para la malla rectangular {self.key}')
+                self.logger.info(f'Cargar fichero de configuración {file_mesh_ini} para la malla rectangular {self.key}')
 
                 config_obj = configparser.ConfigParser()
                 config_obj.read(file_mesh_ini)
@@ -90,10 +110,10 @@ class MeshStructured:
                 self.lx = self.nx * self.dx
                 self.ly = self.ny * self.dy
             except Exception as e:
-                logging.error(e.args[0])
+                self.logger.error(e.args[0])
                 raise ValueError(e.args[0])
         else:
-            logging.error(f'El archivo {file_mesh_ini} no existe.')
+            self.logger.error(f'El archivo {file_mesh_ini} no existe.')
             raise ValueError(f'El archivo {file_mesh_ini} no existe.')
 
     def save_conf(self, file_mesh_ini_save):
@@ -125,7 +145,7 @@ class MeshStructured:
             f.write(f'{var_nx} = {self.nx}')
             f.write(f'{var_ny} = {self.ny}')
 
-        logging.info(f'Guardado fichero de configuración {file_mesh_ini_save} para la malla rectangular {self.key}.')
+        self.logger.info(f'Guardado fichero de configuración {file_mesh_ini_save} para la malla rectangular {self.key}.')
 
     def exec(self, xb, yb, zb, factor_select=1):
         """Calcula la batimetria en la malla rectangular..
@@ -144,17 +164,17 @@ class MeshStructured:
         self.x, self.y = np.meshgrid(x_ext, y_ext)
         self.y = np.flipud(self.y)
 
-        logging.info(f'Calculo de la batimetria en la malla rectangular {self.key} correcto.')
+        self.logger.info(f'Calculo de la batimetria en la malla rectangular {self.key} correcto.')
 
         # Reducir el número de puntos de la batimetría escogiendo puntos aleatorios.
         indices = np.random.choice(len(xb), int(len(xb) * factor_select), replace=False)
         xb_s = xb[indices]
         yb_s = yb[indices]
         zb_s = zb[indices]
-        logging.info(f'Reduccion de puntos de la batimetria correcto. Factor de reduccion: {factor_select}.')
+        self.logger.info(f'Reduccion de puntos de la batimetria correcto. Factor de reduccion: {factor_select}.')
 
         self.z = griddata((xb_s, yb_s), zb_s, (self.x, self.y), method='linear')
-        logging.info(f'Interpolacion de la batimetria correcta.')
+        self.logger.info(f'Interpolacion de la batimetria correcta.')
 
     def enabled(self):
         """Comprueba si la malla rectangular tiene batimetria."""
@@ -177,7 +197,7 @@ class MeshStructured:
             f_out.write("\n")
         f_out.close()
 
-        logging.info(f'Guardado de la batimetria en el fichero {self.fname_out} correcto.')
+        self.logger.info(f'Guardado de la batimetria en el fichero {self.fname_out} correcto.')
 
     def plot(self, fname_png=None, _show=True):
         """Grafica la batimetria en la malla rectangular.
@@ -251,6 +271,6 @@ class MeshStructured:
         vtx, wts = interp_weights(np.vstack((x, y)).T, np.vstack((x_mesh.ravel(), y_mesh.ravel())).T)
         var_mesh = interpolate(var.flatten(), vtx, wts).reshape(x_mesh.shape[0], x_mesh.shape[1])
 
-        logging.info(f'Interpolacion de la variable en la malla estructurada correcta.')
+        self.logger.info(f'Interpolacion de la variable en la malla estructurada correcta.')
 
         return x_mesh, y_mesh, var_mesh

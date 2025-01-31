@@ -168,7 +168,10 @@
       <workItem from="1734692837663" duration="28000" />
       <workItem from="1738225941813" duration="1466000" />
       <workItem from="1738227495232" duration="6769000" />
-      <workItem from="1738249523215" duration="22000" />
+      <workItem from="1738249523215" duration="77000" />
+      <workItem from="1738249641164" duration="3000" />
+      <workItem from="1738254585302" duration="35000" />
+      <workItem from="1738312241565" duration="168000" />
     </task>
     <task id="LOCAL-00001" summary="Me quedo con los puntos de la batimetria que estan dentro de la malla para interpolar más rapido.">
       <option name="closed" value="true" />
@@ -242,7 +245,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738241351753</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Convertido a libreria">
+      <option name="closed" value="true" />
+      <created>1738249556463</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1738249556463</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
