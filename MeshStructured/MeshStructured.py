@@ -117,7 +117,7 @@ class MeshStructured:
 
                 data = config_obj[self.key]
                 self.x = float(data[var_x]) if var_x in data else self.x
-                self.x = float(data[var_y]) if var_y in data else self.y
+                self.y = float(data[var_y]) if var_y in data else self.y
                 self.dx = float(data[var_dx]) if var_dx in data else self.dx
                 self.dy = float(data[var_dy]) if var_dy in data else self.dy
                 self.nx = int(data[var_nx]) if var_nx in data else self.nx
