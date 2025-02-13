@@ -137,13 +137,13 @@ class MeshStructured:
             var_ny = 'ny'
 
         with open(file_mesh_ini_save, 'w') as f:
-            f.write(f'[{self.key}]')
-            f.write(f'{var_x} = {self.x}')
-            f.write(f'{var_y} = {self.y}')
-            f.write(f'{var_dx} = {self.dx}')
-            f.write(f'{var_dy} = {self.dy}')
-            f.write(f'{var_nx} = {self.nx}')
-            f.write(f'{var_ny} = {self.ny}')
+            f.write(f'[{self.key}]\n')
+            f.write(f'{var_x} = {self.x.min()}\n')
+            f.write(f'{var_y} = {self.y.min()}\n')
+            f.write(f'{var_dx} = {self.dx}\n')
+            f.write(f'{var_dy} = {self.dy}\n')
+            f.write(f'{var_nx} = {self.nx}\n')
+            f.write(f'{var_ny} = {self.ny}\n')
 
         self.logger.info(f'Guardado fichero de configuración {file_mesh_ini_save} para la malla rectangular {self.key}.')
 
