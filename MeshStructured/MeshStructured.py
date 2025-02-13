@@ -97,16 +97,31 @@ class MeshStructured:
             try:
                 self.logger.info(f'Cargar fichero de configuración {file_mesh_ini} para la malla rectangular {self.key}')
 
+                if self.coord_type == 'LONLAT':
+                    var_x = 'lonmin'
+                    var_y = 'latmin'
+                    var_dx = 'dlon'
+                    var_dy = 'dlat'
+                    var_nx = 'nlon'
+                    var_ny = 'nlat'
+                else:
+                    var_x = 'xmin'
+                    var_y = 'ymin'
+                    var_dx = 'dx'
+                    var_dy = 'dy'
+                    var_nx = 'nx'
+                    var_ny = 'ny'
+
                 config_obj = configparser.ConfigParser()
                 config_obj.read(file_mesh_ini)
 
                 data = config_obj[self.key]
-                self.x = float(data['xmin']) if self.coord_type == 'UTM' else float(data['lonmin'])
-                self.y = float(data['ymin']) if self.coord_type == 'UTM' else float(data['latmin'])
-                self.dx = int(data['dx']) if 'dx' in data else self.dx
-                self.dy = int(data['dy']) if 'dy' in data else self.dy
-                self.nx = int(data['nx']) if 'nx' in data else self.nx
-                self.ny = int(data['ny']) if 'ny' in data else self.ny
+                self.x = float(data[var_x]) if var_x in data else self.x
+                self.x = float(data[var_y]) if var_y in data else self.y
+                self.dx = int(data[var_dx]) if var_dx in data else self.dx
+                self.dy = int(data[var_dy]) if var_dy in data else self.dy
+                self.nx = int(data[var_nx]) if var_nx in data else self.nx
+                self.ny = int(data[var_ny]) if var_ny in data else self.ny
                 self.lx = self.nx * self.dx
                 self.ly = self.ny * self.dy
             except Exception as e:
