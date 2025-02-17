@@ -40,12 +40,17 @@ class MeshStructured:
         self.key = key
         self.coord_type = coord_type
 
+        self.xmin = None
+        self.ymin = None
+
         self.x = []
         self.y = []
         self.z = []
 
         self.dx = None
         self.dy = None
+        self.nx = None
+        self.ny = None
         self.lx = None
         self.ly = None
 
@@ -153,8 +158,8 @@ class MeshStructured:
 
         with open(file_mesh_ini_save, 'w') as f:
             f.write(f'[{self.key}]\n')
-            f.write(f'{var_x} = {self.x.min()}\n')
-            f.write(f'{var_y} = {self.y.min()}\n')
+            f.write(f'{var_x} = {self.xmin}\n')
+            f.write(f'{var_y} = {self.ymin}\n')
             f.write(f'{var_dx} = {self.dx}\n')
             f.write(f'{var_dy} = {self.dy}\n')
             f.write(f'{var_nx} = {self.nx}\n')
@@ -178,6 +183,7 @@ class MeshStructured:
 
         self.x, self.y = np.meshgrid(x_ext, y_ext)
         self.y = np.flipud(self.y)
+        self.xmin, self.ymin = np.nanmin(self.x), np.nanmin(self.y)
 
         self.logger.info(f'Calculo de la batimetria en la malla rectangular {self.key} correcto.')
 
