@@ -200,10 +200,10 @@ class MeshStructured:
         self.logger.info(f'Interpolacion de la batimetria correcta.')
 
         if xc is not None and yc is not None:
-            # Si se proporciona un contorno, se establece la batimetría a NaN fuera del contorno.
             points = np.vstack((xc, yc)).T
-            mask = qhull.Delaunay(points).find_simplex(np.vstack((self.x.ravel(), self.y.ravel())).T) >= 0
-            self.z[~mask.reshape(self.x.shape)] = np.nan
+            contorno = Path(np.vstack((xc, yc)).T)
+            mask = contorno.contains_points(points).reshape(X.shape)
+            self.z = np.where(mask, self.z, np.nan)
             self.logger.info(f'Mascara de contorno aplicada a la batimetria correcta.')
 
     def enabled(self):
