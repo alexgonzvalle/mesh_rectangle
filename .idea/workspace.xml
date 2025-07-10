@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ce1174fd-16ac-4b44-ac5f-2470ac654c19" name="Default Changelist" comment="Aplicar contorno">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MeshStructured/MeshStructured.py" beforeDir="false" afterPath="$PROJECT_DIR$/MeshStructured/MeshStructured.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -177,7 +176,7 @@
       <workItem from="1748340447296" duration="53000" />
       <workItem from="1751443732749" duration="70000" />
       <workItem from="1752143753182" duration="550000" />
-      <workItem from="1752146369454" duration="426000" />
+      <workItem from="1752146369454" duration="459000" />
     </task>
     <task id="LOCAL-00001" summary="Me quedo con los puntos de la batimetria que estan dentro de la malla para interpolar más rapido.">
       <option name="closed" value="true" />
@@ -331,7 +330,15 @@
       <option name="project" value="LOCAL" />
       <updated>1752146430996</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Aplicar contorno">
+      <option name="closed" value="true" />
+      <created>1752146845562</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1752146845562</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
