@@ -167,11 +167,13 @@ class MeshStructured:
 
         self.logger.info(f'Guardado fichero de configuración {file_mesh_ini_save} para la malla rectangular {self.key}.')
 
-    def exec(self, xb, yb, zb, factor_select=1):
+    def exec(self, xb, yb, zb, xc=None, yc=None, factor_select=1):
         """Calcula la batimetria en la malla rectangular..
         :param xb: Vector de coordenadas X de la batimetría
         :param yb: Vector de coordenadas Y de la batimetría
         :param zb: Vector de coordenadas Z de la batimetría
+        :param xc: Vector de coordenadas X del contorno (opcional)
+        :param yc: Vector de coordenadas Y del contorno (opcional)
         :param factor_select: Factor de reduccion de puntos de la batimetria."""
 
         # Calculo las dimensiones de la malla.
@@ -196,6 +198,13 @@ class MeshStructured:
 
         self.z = griddata((xb_s, yb_s), zb_s, (self.x, self.y), method='linear')
         self.logger.info(f'Interpolacion de la batimetria correcta.')
+
+        if xc is not None and yc is not None:
+            # Si se proporciona un contorno, se establece la batimetría a NaN fuera del contorno.
+            points = np.vstack((xc, yc)).T
+            mask = qhull.Delaunay(points).find_simplex(np.vstack((self.x.ravel(), self.y.ravel())).T) >= 0
+            self.z[~mask.reshape(self.x.shape)] = np.nan
+            self.logger.info(f'Mascara de contorno aplicada a la batimetria correcta.')
 
     def enabled(self):
         """Comprueba si la malla rectangular tiene batimetria."""
