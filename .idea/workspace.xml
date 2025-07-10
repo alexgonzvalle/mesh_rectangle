@@ -149,8 +149,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-PY-251.25410.159" />
-        <option value="bundled-python-sdk-e0ed3721d81e-36ea0e71a18c-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.25410.159" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-PY-251.26927.74" />
+        <option value="bundled-python-sdk-657d8234b839-64d779b69b7a-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-251.26927.74" />
       </set>
     </attachedChunks>
   </component>
@@ -173,7 +173,10 @@
       <workItem from="1738312241565" duration="814000" />
       <workItem from="1739434694460" duration="2230000" />
       <workItem from="1739785762475" duration="112000" />
-      <workItem from="1748340289361" duration="11000" />
+      <workItem from="1748340289361" duration="20000" />
+      <workItem from="1748340447296" duration="53000" />
+      <workItem from="1751443732749" duration="70000" />
+      <workItem from="1752143753182" duration="134000" />
     </task>
     <task id="LOCAL-00001" summary="Me quedo con los puntos de la batimetria que estan dentro de la malla para interpolar más rapido.">
       <option name="closed" value="true" />
@@ -303,7 +306,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739785870057</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="bug save_conf">
+      <option name="closed" value="true" />
+      <created>1748340306107</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1748340306107</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

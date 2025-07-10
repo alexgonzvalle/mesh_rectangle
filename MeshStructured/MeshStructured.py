@@ -220,15 +220,21 @@ class MeshStructured:
 
         self.logger.info(f'Guardado de la batimetria en el fichero {self.fname_out} correcto.')
 
-    def plot(self, fname_png=None, _show=True):
+    def plot(self, ax=None, fname_png=None, _show=True):
         """Grafica la batimetria en la malla rectangular.
         :param fname_png: [str] Nombre del archivo de salida.
-        :param _show: [bool] Mostrar la figura."""
+        :param _show: [bool] Mostrar la figura.
+        :param ax: [matplotlib.axes.Axes] Eje donde se graficara la batimetria."""
 
         z = self.z.copy() * -1
-        z[z >= 0] = np.NaN
+        z[z >= 0] = np.nan
 
-        fig, ax = plt.subplots()
+        if ax is None:
+            fig, ax = plt.subplots(1, 1)
+            _show = True if _show else False
+        else:
+            fig = ax.figure
+
         ax.set_title('Batimetria en la malla rectangular')
         if self.coord_type == 'UTM':
             ax.set_xlabel('X (m)')
@@ -241,17 +247,18 @@ class MeshStructured:
         cbar = fig.colorbar(pc)
         cbar.set_label("(m)", labelpad=-0.1)
 
-        if fname_png is not None:
-            plt.savefig(fname_png, bbox_inches='tight')
-
         if _show:
             plt.show()
+        elif _save:
+            plt.savefig(fname_png, dpi=300)
+
+        return ax
 
     def plot_3d(self):
         """Grafica la batimetria en la malla rectangular en 3D."""
 
         z = self.z.copy() * -1
-        z[z == 0] = np.NaN
+        z[z == 0] = np.nan
 
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
