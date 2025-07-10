@@ -201,7 +201,7 @@ class MeshStructured:
         self.logger.info(f'Interpolacion de la batimetria correcta.')
 
         if xc is not None and yc is not None:
-            points = np.vstack((self.x, self.y)).T
+            points = np.vstack((self.x.ravel(), self.y.ravel())).T
             contorno = Path(np.vstack((xc, yc)).T)
             mask = contorno.contains_points(points).reshape(X.shape)
             self.z = np.where(mask, self.z, np.nan)
