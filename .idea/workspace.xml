@@ -178,7 +178,8 @@
       <workItem from="1751443732749" duration="70000" />
       <workItem from="1752143753182" duration="550000" />
       <workItem from="1752146369454" duration="1316000" />
-      <workItem from="1752736845341" duration="21000" />
+      <workItem from="1752736845341" duration="46000" />
+      <workItem from="1752736959301" duration="23000" />
     </task>
     <task id="LOCAL-00001" summary="Me quedo con los puntos de la batimetria que estan dentro de la malla para interpolar más rapido.">
       <option name="closed" value="true" />
@@ -372,7 +373,15 @@
       <option name="project" value="LOCAL" />
       <updated>1752147194328</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Aplicar contorno">
+      <option name="closed" value="true" />
+      <created>1752736879890</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1752736879890</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

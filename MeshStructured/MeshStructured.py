@@ -230,11 +230,12 @@ class MeshStructured:
 
         self.logger.info(f'Guardado de la batimetria en el fichero {self.fname_out} correcto.')
 
-    def plot(self, ax=None, fname_png=None, _show=True):
+    def plot(self, ax=None, fname_png=None, _show=True, dpi=300):
         """Grafica la batimetria en la malla rectangular.
         :param fname_png: [str] Nombre del archivo de salida.
         :param _show: [bool] Mostrar la figura.
-        :param ax: [matplotlib.axes.Axes] Eje donde se graficara la batimetria."""
+        :param ax: [matplotlib.axes.Axes] Eje donde se graficara la batimetria.
+        :param dpi: [int] DPI de la figura."""
 
         z = self.z.copy() * -1
         z[z >= 0] = np.nan
@@ -260,7 +261,7 @@ class MeshStructured:
         if _show:
             plt.show()
         elif fname_png is not None:
-            plt.savefig(fname_png, dpi=300)
+            plt.savefig(fname_png, dpi=dpi)
 
         return ax
 
