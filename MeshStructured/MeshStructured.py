@@ -259,7 +259,7 @@ class MeshStructured:
 
         if _show:
             plt.show()
-        elif _save:
+        elif fname_png is not None:
             plt.savefig(fname_png, dpi=300)
 
         return ax
