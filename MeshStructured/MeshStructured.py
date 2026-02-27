@@ -207,12 +207,37 @@ class MeshStructured:
             self.z = np.where(mask, self.z, np.nan)
             self.logger.info(f'Mascara de contorno aplicada a la batimetria correcta.')
 
+    def get(self, file_mesh):
+        """Obtengo la batimetria en la malla rectangular..
+        :param xb: Vector de coordenadas X de la batimetría
+        :param yb: Vector de coordenadas Y de la batimetría
+        :param zb: Vector de coordenadas Z de la batimetría
+        :param xc: Vector de coordenadas X del contorno (opcional)
+        :param yc: Vector de coordenadas Y del contorno (opcional)
+        :param factor_select: Factor de reduccion de puntos de la batimetria."""
+
+        # Calculo las dimensiones de la malla.
+        xmax = self.xmin + self.nx * self.dx
+        ymax = self.ymin + self.ny * self.dy
+
+        x_ext = np.arange(self.xmin, xmax, self.dx)
+        y_ext = np.arange(self.ymin, ymax, self.dy)
+
+        self.x, self.y = np.meshgrid(x_ext, y_ext)
+        self.y = np.flipud(self.y)
+        self.xmin, self.ymin = np.nanmin(self.x), np.nanmin(self.y)
+
+        self.logger.info(f'Calculo de la batimetria en la malla rectangular {self.key} correcto.')
+
+        self.load_z(file_mesh)
+        self.logger.info(f'Recuperacion de la batimetria correcta.')
+
     def enabled(self):
         """Comprueba si la malla rectangular tiene batimetria."""
 
         return self.x is not None
 
-    def save(self, file_save_dat):
+    def save_z(self, file_save_dat):
         """Guarda la profundidad de la batimetria en la malla en un archivo .dat.
 
         :param file_save_dat: Nombre del archivo .dat donde se guardara la batimetria."""
@@ -229,6 +254,33 @@ class MeshStructured:
         f_out.close()
 
         self.logger.info(f'Guardado de la batimetria en el fichero {self.fname_out} correcto.')
+
+    def load_z(self, file_mesh):
+        """Carga la profundidad de la batimetría desde un archivo .dat
+        y la almacena en self.z.
+
+        :param file_mesh: Nombre del archivo .dat a leer.
+        """
+
+        self.fname_out = file_mesh
+
+        z_data = []
+
+        with open(self.fname_out, 'r') as f_in:
+            for line in f_in:
+                # Elimina salto de línea y posibles tabs finales
+                values = line.strip().split('\t')
+
+                row = []
+                for val in values:
+                    if val == '' or val == 'NaN':
+                        row.append(np.nan)
+                    else:
+                        row.append(float(val))
+
+                z_data.append(row)
+
+        self.z = np.array(z_data)
 
     def plot(self, ax=None, fname_png=None, _show=True, dpi=300):
         """Grafica la batimetria en la malla rectangular.
