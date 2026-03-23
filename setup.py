@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text()
 
-VERSION = '1.1.0'
+VERSION = '1.1.1'
 DESCRIPTION = 'Manage Mesh Structured.'
 PACKAGE_NAME = 'MeshStructured'
 AUTHOR = 'IHCantabria - AGV'

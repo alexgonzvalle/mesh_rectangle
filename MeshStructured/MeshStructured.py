@@ -136,14 +136,12 @@ class MeshStructured:
             self.z = np.where(mask, self.z, np.nan)
             self.logger.info(f'Mascara de contorno aplicada a la batimetria correcta.')
 
-    def get(self, file_mesh):
+    def get(self, file_mesh, file_mesh_ini=None):
         """Obtengo la batimetria en la malla rectangular..
-        :param xb: Vector de coordenadas X de la batimetría
-        :param yb: Vector de coordenadas Y de la batimetría
-        :param zb: Vector de coordenadas Z de la batimetría
-        :param xc: Vector de coordenadas X del contorno (opcional)
-        :param yc: Vector de coordenadas Y del contorno (opcional)
-        :param factor_select: Factor de reduccion de puntos de la batimetria."""
+        :param file_mesh
+        :param file_mesh_ini
+        """
+        self._set(file_mesh_ini=file_mesh_ini)
 
         # Calculo las dimensiones de la malla.
         xmax = self.xmin + self.nx * self.dx
