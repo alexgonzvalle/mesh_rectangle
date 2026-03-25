@@ -4,7 +4,7 @@ import numpy as np
 import numpy.testing as npt
 import pytest
 
-from mesh_rectangle import CoordinateType, MeshStructured
+from Mesh_Structured import CoordinateType, MeshStructured
 
 
 def test_execute_generates_expected_mesh(scattered_plane_data: tuple[np.ndarray, np.ndarray, np.ndarray]) -> None:

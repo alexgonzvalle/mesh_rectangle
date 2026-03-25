@@ -1,6 +1,6 @@
-# mesh_rectangle
+# Mesh_Structured
 
-`mesh_rectangle` is a scientific Python library for building regular rectangular meshes and interpolating bathymetry or other scalar fields onto them.
+`Mesh_Structured` is a scientific Python library for building regular rectangular meshes and interpolating bathymetry or other scalar fields onto them.
 
 The project is structured as an installable `src` package with a focused public API and explicit validation.
 
@@ -27,7 +27,7 @@ pip install -e .[dev]
 ```python
 import numpy as np
 
-from mesh_rectangle import MeshStructured
+from Mesh_Structured import MeshStructured
 
 xb = np.array([0.0, 1.0, 0.0, 1.0, 0.5])
 yb = np.array([0.0, 0.0, 1.0, 1.0, 0.5])
@@ -41,8 +41,8 @@ mesh.plot(_show=False)
 
 ## Public API
 
-- `mesh_rectangle.MeshStructured`
-- `mesh_rectangle.CoordinateType`
+- `Mesh_Structured.MeshStructured`
+- `Mesh_Structured.CoordinateType`
 
 ## Testing
 

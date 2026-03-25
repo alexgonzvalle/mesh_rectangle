@@ -3,7 +3,7 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "mesh-rectangle"
+name = "Mesh_Structured"
 version = "2.0.0"
 description = "Structured rectangular meshes for bathymetry extraction and interpolation."
 readme = "README.md"

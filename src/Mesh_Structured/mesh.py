@@ -56,7 +56,7 @@ class MeshStructured:
         self,
         key: str,
         coord_type: CoordinateType | str = CoordinateType.UTM,
-        name_logger: str = "mesh_rectangle",
+        name_logger: str = "Mesh_Structured",
     ) -> None:
         self.logger = get_default_logger(name_logger)
         self.key = key

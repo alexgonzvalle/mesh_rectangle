@@ -21,4 +21,4 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -e .[dev]
       - name: Run tests
-        run: pytest --cov=mesh_rectangle --cov-report=term-missing
+        run: pytest --cov=Mesh_Structured --cov-report=term-missing

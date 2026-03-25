@@ -9,7 +9,7 @@ SRC_PATH = PROJECT_ROOT / "src"
 if str(SRC_PATH) not in sys.path:
     sys.path.insert(0, str(SRC_PATH))
 
-from mesh_rectangle import CoordinateType, MeshStructured
+from Mesh_Structured import CoordinateType, MeshStructured
 
 ds = xr.open_dataset(r"D:\Development\Casos\CLIMPORT\Santander_Op\hindcast\2_Propagacion del oleaje (T3.2)\Batimetria.nc")
 x, y, z = ds.lon.values, ds.lat.values, -ds.elevation.values[0]
